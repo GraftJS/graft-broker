@@ -1,0 +1,38 @@
+{
+  "name": "graft-broker",
+  "version": "0.0.1",
+  "description": "The Graft broker",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test.js | faucet"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GraftJS/graft-broker.git"
+  },
+  "keywords": [
+    "graft",
+    "publish",
+    "subscribe",
+    "pubsub",
+    "stream"
+  ],
+  "author": "Matteo Collina <hello@matteocollina.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GraftJS/graft-broker/issues"
+  },
+  "homepage": "https://github.com/GraftJS/graft-broker",
+  "dependencies": {
+    "graft": "^0.2.0",
+    "inherits": "^2.0.1",
+    "mqemitter": "^0.2.0",
+    "mqstreams": "^0.1.0",
+    "readable-stream": "^1.0.31",
+    "through2": "^0.6.1"
+  },
+  "devDependencies": {
+    "faucet": "0.0.1",
+    "tape": "^2.14.0"
+  }
+}
