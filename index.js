@@ -12,7 +12,24 @@ function through(func) {
 
 function subscribe(mq) {
   return through(function(req, enc, done) {
-    mq.readable(req.topic).pipe(req.messages)
+    var returnStatus;
+
+    if (!req.topic) {
+      returnStatus = {
+          status: 'not subscribed'
+        , reason: 'missing topic'
+      }
+    } else {
+      mq.readable(req.topic).pipe(req.messages)
+      returnStatus = {
+          status: 'subscribed'
+        , topic: req.topic
+      }
+    }
+
+    if (req.ret)
+      req.ret.end(returnStatus)
+
     done()
   })
 }

@@ -28,3 +28,46 @@ test('basic', function(t) {
     , hello: 'world'
   })
 })
+
+test('status ok', function(t) {
+  t.plan(1)
+
+  var broker  = graftBroker()
+    , updates = broker.ReadChannel()
+    , ret     = broker.ReadChannel()
+
+  ret.on('data', function(data) {
+    t.deepEqual(data, {
+        status: 'subscribed'
+      , topic: 'hello'
+    })
+  })
+
+  broker.write({
+      cmd: 'subscribe'
+    , topic: 'hello'
+    , messages: updates
+    , ret: ret
+  })
+})
+
+test('status failed because of no topic', function(t) {
+  t.plan(1)
+
+  var broker  = graftBroker()
+    , updates = broker.ReadChannel()
+    , ret     = broker.ReadChannel()
+
+  ret.on('data', function(data) {
+    t.deepEqual(data, {
+        status: 'not subscribed'
+      , reason: 'missing topic'
+    })
+  })
+
+  broker.write({
+      cmd: 'subscribe'
+    , messages: updates
+    , ret: ret
+  })
+})
