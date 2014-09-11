@@ -2,7 +2,8 @@
 var mqstreams = require('mqstreams')
   , Graft     = require('graft')
   , inherits  = require('inherits')
-  , through2   = require('through2')
+  , through2  = require('through2')
+  , mqemitter = require('mqemitter')
 
 function through(func) {
   return through2.obj({
@@ -43,15 +44,8 @@ function publish(mq) {
 module.exports = function(mq) {
   var graft = new Graft()
 
-  if (!mq) {
-    try {
-      mq = require('mqemitter')()
-    } catch(err) {
-      console.err('missing mqemitter, install it with')
-      console.err('npm install mqemitter --save')
-      process.exit(-1)
-    }
-  }
+  if (!mq)
+    mq = mqemitter()
 
   mq = mqstreams(mq)
 
